@@ -1,5 +1,6 @@
 namespace CleanArchByMe.Domain.Shared.Interfaces;
 
-public interface IEntity {
+public interface IEntity
+{
     Guid Id { get; }
 }
