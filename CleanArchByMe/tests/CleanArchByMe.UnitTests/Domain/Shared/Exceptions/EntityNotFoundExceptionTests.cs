@@ -1,5 +1,7 @@
 ﻿using CleanArchByMe.Domain.Shared.Exceptions;
 
+using FluentAssertions;
+
 namespace CleanArchByMe.UnitTests.Domain.Shared.Exceptions;
 
 public class EntityNotFoundExceptionTests
@@ -8,7 +10,6 @@ public class EntityNotFoundExceptionTests
     public void ShouldInstantiateWithCorrectMessage()
     {
         var ex = new EntityNotFoundException("potato");
-
-        Assert.Equal("Cannot find potato", ex.Message);
+        ex.Message.Should().Be("Cannot find potato");
     }
 }
