@@ -44,7 +44,7 @@ public class TodoUseCasesHandler(IRepository<Todo> repository) :
 
     private async Task<Todo> GetEntityAsync(Guid id, CancellationToken cancellationToken)
     {
-        Guard.Against.NullOrEmpty(nameof(id), nameof(id));
+        Guard.Against.NullOrEmpty(id, nameof(id));
         return await _repository.GetAsync(new GetTodoByIdSpecification(id), cancellationToken) ??
             throw new EntityNotFoundException(nameof(Todo));
     }

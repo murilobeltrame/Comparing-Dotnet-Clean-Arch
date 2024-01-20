@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics.CodeAnalysis;
+
+using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchByMe.Infrastructure.Data;
 
-public class ApplicationContext: DbContext
-{
-    public ApplicationContext(DbContextOptions options) : base(options) { }
-}
+[ExcludeFromCodeCoverage]
+public class ApplicationContext(DbContextOptions options) : DbContext(options);

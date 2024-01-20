@@ -7,9 +7,17 @@ using MediatR;
 
 namespace CleanArchByMe.Application.TodoUseCases.Queries;
 
-public record FetchTodosQuery(string Title, string Description, DateTime? StartDate, DateTime? EndDate, bool? Complete) : IRequest<IEnumerable<TodoViewModel>>
+public record FetchTodosQuery(
+    string? Title = null, 
+    string? Description = null, 
+    DateTime? StartDate = null, 
+    DateTime? EndDate = null, 
+    bool? Complete = null) : IRequest<IEnumerable<TodoViewModel>>
 {
-    internal ISpecification<Todo, TodoViewModel> ToSpecification() => new FetchTodosSpecification<TodoViewModel>(0, 10, s => new TodoViewModel(s.Title, s.DueDate, s.Completed));
+    public ISpecification<Todo, TodoViewModel> ToSpecification() => new FetchTodosSpecification<TodoViewModel>(0, 10, todo => TodoViewModel.FromTodo(todo));
 }
 
-public record TodoViewModel(string Title, DateTime? DueDate, bool Complete);
+public record TodoViewModel(string Title, DateTime? DueDate, bool Complete)
+{
+    public static TodoViewModel FromTodo(Todo todo) => new(todo.Title, todo.DueDate, todo.Completed);
+}
