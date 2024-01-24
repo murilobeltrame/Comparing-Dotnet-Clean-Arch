@@ -107,6 +107,7 @@ public class TodoUseCasesHandlerTests
         var action = async () => await handler.Handle(new UpdateTodoCommand(Guid.NewGuid(), "Title", "Description"), CancellationToken.None);
 
         await action.Should().NotThrowAsync();
+        _mockedRepository.Verify(v => v.UpdateAsync(It.IsAny<Todo>(), CancellationToken.None));
     }
 
     [Fact]
@@ -148,6 +149,7 @@ public class TodoUseCasesHandlerTests
         var action = async () => await handler.Handle(new DeleteTodoCommand(Guid.NewGuid()), CancellationToken.None);
 
         await action.Should().NotThrowAsync();
+        _mockedRepository.Verify(v => v.DeleteAsync(It.IsAny<Todo>(), CancellationToken.None));
     }
 
     [Fact]

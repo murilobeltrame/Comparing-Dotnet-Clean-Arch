@@ -74,14 +74,17 @@ public class RepositoryTests
 
         result.Should().NotBeNull();
         result.Id.Should().NotBe(Guid.Empty);
+
+        var createdThing = await _context.Things.FirstOrDefaultAsync(w => w.Id == result.Id);
+        createdThing.Should().NotBeNull();
     }
 
     [Fact]
     public async Task ShouldBeAbleToUpdateATackedEntity()
     {
         var thing = new Thing("Thing", "To be updated");
-        await _context.AddAsync(thing);
-        await _context.SaveChangesAsync();
+        await _repository.CreateAsync(thing);
+
         var updatedDecription = "Description Updated";
         thing.UpdateDescription(updatedDecription);
 

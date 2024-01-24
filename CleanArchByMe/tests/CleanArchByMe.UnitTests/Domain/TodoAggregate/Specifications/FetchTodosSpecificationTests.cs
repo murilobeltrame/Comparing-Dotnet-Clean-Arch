@@ -16,7 +16,14 @@ public class FetchTodosSpecificationTests
     [Fact]
     public void ShouldMatchSpecification()
     {
-        var specification = new FetchTodosSpecification<View>(10, 10, todo => View.FromTodo(todo));
+        var specification = new FetchTodosSpecification<View>(
+            string.Empty,
+            string.Empty,
+            null, null,
+            null,
+            10, 
+            10, 
+            todo => View.FromTodo(todo));
         var result = specification.Evaluate(_todos);
 
         result.Should().HaveCount(10);

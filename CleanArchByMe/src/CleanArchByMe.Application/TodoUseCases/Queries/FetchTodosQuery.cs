@@ -12,9 +12,19 @@ public record FetchTodosQuery(
     string? Description = null, 
     DateTime? StartDate = null, 
     DateTime? EndDate = null, 
-    bool? Complete = null) : IRequest<IEnumerable<TodoViewModel>>
+    bool? Complete = null,
+    uint Skip = 0,
+    ushort Take = 10) : IRequest<IEnumerable<TodoViewModel>>
 {
-    public ISpecification<Todo, TodoViewModel> ToSpecification() => new FetchTodosSpecification<TodoViewModel>(0, 10, todo => TodoViewModel.FromTodo(todo));
+    public ISpecification<Todo, TodoViewModel> ToSpecification() => new FetchTodosSpecification<TodoViewModel>(
+        Title,
+        Description,
+        StartDate,
+        EndDate,
+        Complete,
+        Skip, 
+        Take, 
+        todo => TodoViewModel.FromTodo(todo));
 }
 
 public record TodoViewModel(string Title, DateTime? DueDate, bool Complete)
