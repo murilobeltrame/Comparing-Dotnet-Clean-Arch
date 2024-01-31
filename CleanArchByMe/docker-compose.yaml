@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: src/
+      dockerfile: Dockerfile
+    ports:
+      - "8088:80"
+    environment:
+      - ASPNETCORE_ConnectionStrings:DbConnection=Server=mssql;Database=Todos;User Id=sa;Password=${MSSQL_PASSWORD};TrustServerCertificate=True;
+    depends_on:
+      mssql:
+        condition: service_healthy
+  migration:
+    build:
+      context: tools/
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ConnectionStrings:DbConnection=Server=mssql;Database=Todos;User Id=sa;Password=${MSSQL_PASSWORD};TrustServerCertificate=True;
+    depends_on:
+      mssql:
+        condition: service_healthy
+    restart: no
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "/opt/mssql-tools/bin/sqlcmd",
+          "-Usa",
+          "-P${MSSQL_PASSWORD}",
+          "-Q",
+          "select 1",
+        ]
+      interval: 1s
+      retries: 30
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${MSSQL_PASSWORD}
+    ports:
+      - "14333:1433"

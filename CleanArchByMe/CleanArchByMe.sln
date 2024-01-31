@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchByMe.IntegrationTe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchByMe.UnitTests", "tests\CleanArchByMe.UnitTests\CleanArchByMe.UnitTests.csproj", "{3658330D-118D-4B05-8742-FDAB842176B7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{4F3D7545-534A-4DEC-9EA4-33C1E4111DCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchByMe.Infrastructure.Tools", "tools\CleanArchByMe.Infrastructure.Tools\CleanArchByMe.Infrastructure.Tools.csproj", "{1F2A6498-7755-40D3-BCBA-7597BF0CD5E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +59,10 @@ Global
 		{3658330D-118D-4B05-8742-FDAB842176B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3658330D-118D-4B05-8742-FDAB842176B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3658330D-118D-4B05-8742-FDAB842176B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F2A6498-7755-40D3-BCBA-7597BF0CD5E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F2A6498-7755-40D3-BCBA-7597BF0CD5E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F2A6498-7755-40D3-BCBA-7597BF0CD5E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F2A6498-7755-40D3-BCBA-7597BF0CD5E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +75,7 @@ Global
 		{17ABC141-6336-4506-AE47-3F50E3296648} = {FDB6E3CC-7A34-4CC6-8C3F-BCB7E51931E9}
 		{48BC2611-CF3F-4F68-BE0D-AB297ACED354} = {FDB6E3CC-7A34-4CC6-8C3F-BCB7E51931E9}
 		{3658330D-118D-4B05-8742-FDAB842176B7} = {FDB6E3CC-7A34-4CC6-8C3F-BCB7E51931E9}
+		{1F2A6498-7755-40D3-BCBA-7597BF0CD5E3} = {4F3D7545-534A-4DEC-9EA4-33C1E4111DCB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F7EBC4A4-AFFB-4CD8-85C8-BA8F5178608A}
