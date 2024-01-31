@@ -5,29 +5,26 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C64F3B54-2660-4EEC-BEAB-FCB89902EF6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchByMe.Api", "src\CleanArchByMe.Api\CleanArchByMe.Api.csproj", "{B7ECE650-FBA6-479D-86DA-18CE8EA94A1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchByMe.Api", "src\CleanArchByMe.Api\CleanArchByMe.Api.csproj", "{B7ECE650-FBA6-479D-86DA-18CE8EA94A1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchByMe.Application", "src\CleanArchByMe.Application\CleanArchByMe.Application.csproj", "{57FD29E5-4B58-4356-856C-4FFCEED4642D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchByMe.Application", "src\CleanArchByMe.Application\CleanArchByMe.Application.csproj", "{57FD29E5-4B58-4356-856C-4FFCEED4642D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchByMe.Domain", "src\CleanArchByMe.Domain\CleanArchByMe.Domain.csproj", "{022A17B9-518D-4C6A-9E17-D915D54EB1EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchByMe.Domain", "src\CleanArchByMe.Domain\CleanArchByMe.Domain.csproj", "{022A17B9-518D-4C6A-9E17-D915D54EB1EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchByMe.Infrastructure", "src\CleanArchByMe.Infrastructure\CleanArchByMe.Infrastructure.csproj", "{4336FDDD-1507-4EE7-A0FB-B1C44D3A1A31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchByMe.Infrastructure", "src\CleanArchByMe.Infrastructure\CleanArchByMe.Infrastructure.csproj", "{4336FDDD-1507-4EE7-A0FB-B1C44D3A1A31}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FDB6E3CC-7A34-4CC6-8C3F-BCB7E51931E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchByMe.FunctionalTests", "tests\CleanArchByMe.FunctionalTests\CleanArchByMe.FunctionalTests.csproj", "{17ABC141-6336-4506-AE47-3F50E3296648}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchByMe.FunctionalTests", "tests\CleanArchByMe.FunctionalTests\CleanArchByMe.FunctionalTests.csproj", "{17ABC141-6336-4506-AE47-3F50E3296648}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchByMe.IntegrationTests", "tests\CleanArchByMe.IntegrationTests\CleanArchByMe.IntegrationTests.csproj", "{48BC2611-CF3F-4F68-BE0D-AB297ACED354}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchByMe.IntegrationTests", "tests\CleanArchByMe.IntegrationTests\CleanArchByMe.IntegrationTests.csproj", "{48BC2611-CF3F-4F68-BE0D-AB297ACED354}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanArchByMe.UnitTests", "tests\CleanArchByMe.UnitTests\CleanArchByMe.UnitTests.csproj", "{3658330D-118D-4B05-8742-FDAB842176B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CleanArchByMe.UnitTests", "tests\CleanArchByMe.UnitTests\CleanArchByMe.UnitTests.csproj", "{3658330D-118D-4B05-8742-FDAB842176B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B7ECE650-FBA6-479D-86DA-18CE8EA94A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -59,6 +56,9 @@ Global
 		{3658330D-118D-4B05-8742-FDAB842176B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3658330D-118D-4B05-8742-FDAB842176B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B7ECE650-FBA6-479D-86DA-18CE8EA94A1A} = {C64F3B54-2660-4EEC-BEAB-FCB89902EF6E}
 		{57FD29E5-4B58-4356-856C-4FFCEED4642D} = {C64F3B54-2660-4EEC-BEAB-FCB89902EF6E}
@@ -67,5 +67,8 @@ Global
 		{17ABC141-6336-4506-AE47-3F50E3296648} = {FDB6E3CC-7A34-4CC6-8C3F-BCB7E51931E9}
 		{48BC2611-CF3F-4F68-BE0D-AB297ACED354} = {FDB6E3CC-7A34-4CC6-8C3F-BCB7E51931E9}
 		{3658330D-118D-4B05-8742-FDAB842176B7} = {FDB6E3CC-7A34-4CC6-8C3F-BCB7E51931E9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7EBC4A4-AFFB-4CD8-85C8-BA8F5178608A}
 	EndGlobalSection
 EndGlobal

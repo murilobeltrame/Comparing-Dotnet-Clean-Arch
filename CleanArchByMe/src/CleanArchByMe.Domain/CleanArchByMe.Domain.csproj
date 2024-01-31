@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ardalis.guardclauses" Version="4.3.0" />
+    <PackageReference Include="ardalis.guardclauses" Version="4.4.0" />
     <PackageReference Include="ardalis.specification" Version="8.0.0" />
   </ItemGroup>
 

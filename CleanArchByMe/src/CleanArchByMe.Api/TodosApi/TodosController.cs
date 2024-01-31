@@ -1,43 +1,47 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CleanArchByMe.Application.TodoUseCases.Commands;
+using CleanArchByMe.Application.TodoUseCases.Queries;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using MediatR;
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchByMe.Api.TodosApi
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class TodosController : ControllerBase
+    [Route("[controller]")]
+    public class TodosController(IMediator mediator) : ControllerBase
     {
-        // GET: api/<TodosController>
+        private readonly IMediator _mediator = mediator;
+
         [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        public async Task<IActionResult> Fetch([FromQuery] FetchTodosQuery query) => Ok(await _mediator.Send(query));
 
         // GET api/<TodosController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+        public async Task<IActionResult> Get(Guid id) => Ok(await _mediator.Send(new GetTodoByIdQuery(id)));
 
         // POST api/<TodosController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] CreateTodoCommand command)
         {
+            var result = await _mediator.Send(command);
+            return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
         }
 
         // PUT api/<TodosController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateTodoCommand command)
         {
+            await _mediator.Send(command);
+            return NoContent();
         }
 
         // DELETE api/<TodosController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
+            await _mediator.Send(new DeleteTodoCommand(id));
+            return NoContent();
         }
     }
 }
