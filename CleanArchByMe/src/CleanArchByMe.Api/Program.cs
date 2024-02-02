@@ -1,4 +1,5 @@
 using CleanArchByMe.Api.Shared.Middlewares;
+using CleanArchByMe.Application;
 using CleanArchByMe.Domain.Shared.Interfaces;
 using CleanArchByMe.Infrastructure.Data;
 
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseKestrel(options => options.AddServerHeader = false);
 builder.Services.AddDbContextPool<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
-builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblyContaining<ApplicationAssemblyReference>());
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
