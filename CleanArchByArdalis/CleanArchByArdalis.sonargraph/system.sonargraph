@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<ns2:softwareSystem xmlns:ns2="http://www.hello2morrow.com/sonargraph/core" id="8744981d0e26e954f3ec9bdb57ec3e5b" version="13.3.1.835">
+	<description></description>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./src/CleanArchByArdalis.Web" projectNameWithFlavor="CleanArchByArdalis.Web" name="CleanArchByArdalis.Web" id="1f47754cc9cf71791adaf2e0708fbf59" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./src/CleanArchByArdalis.Core" projectNameWithFlavor="CleanArchByArdalis.Core" name="CleanArchByArdalis.Core" id="3a0d20766827a0a156f73b831de86ec3" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./src/CleanArchByArdalis.Infrastructure" projectNameWithFlavor="CleanArchByArdalis.Infrastructure" name="CleanArchByArdalis.Infrastructure" id="cf462639525bc1518f8ba5715a409136" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./tests/CleanArchByArdalis.FunctionalTests" projectNameWithFlavor="CleanArchByArdalis.FunctionalTests" name="CleanArchByArdalis.FunctionalTests" id="3b6d8d50bb9e26e42cc22068dfc51cf1" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./tests/CleanArchByArdalis.IntegrationTests" projectNameWithFlavor="CleanArchByArdalis.IntegrationTests" name="CleanArchByArdalis.IntegrationTests" id="bab7cad95ef34223639aa2684beb40df" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./tests/CleanArchByArdalis.UnitTests" projectNameWithFlavor="CleanArchByArdalis.UnitTests" name="CleanArchByArdalis.UnitTests" id="e51d5abb03c7cffdb7abae0b5726cb87" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./src/CleanArchByArdalis.UseCases" projectNameWithFlavor="CleanArchByArdalis.UseCases" name="CleanArchByArdalis.UseCases" id="14e5f9acc4643cf4a4a3c22fbcd857c0" language="CSharp">
+		<description></description>
+	</module>
+	<systemExtension xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynSystemConfiguration" solutionFilePath="./CleanArchByArdalis.sln" language="CSharp"></systemExtension>
+</ns2:softwareSystem>

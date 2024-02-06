@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<ns2:softwareSystem xmlns:ns2="http://www.hello2morrow.com/sonargraph/core" id="ebe540c922c1e46c414c4d4377199547" version="13.3.1.835">
+	<description></description>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./src/Domain" projectNameWithFlavor="Domain" name="CleanArchByJasonTaylor.Domain" id="69b4e80f60e4bf7f877236ceb92fe8c9" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./src/Application" projectNameWithFlavor="Application" name="CleanArchByJasonTaylor.Application" id="cfdc7aff67f4044b267b3d1255dbd51f" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./src/Infrastructure" projectNameWithFlavor="Infrastructure" name="CleanArchByJasonTaylor.Infrastructure" id="66c5a43bc988d3907b80c582c72e186c" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./tests/Application.UnitTests" projectNameWithFlavor="Application.UnitTests" name="CleanArchByJasonTaylor.Application.UnitTests" id="ec12ac18b8a95abd7db709a92fcfd581" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./tests/Domain.UnitTests" projectNameWithFlavor="Domain.UnitTests" name="CleanArchByJasonTaylor.Domain.UnitTests" id="812efe499e1c9899e3eafc7f459e747e" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./src/Web" projectNameWithFlavor="Web" name="CleanArchByJasonTaylor.Web" id="94693f0519295c651bf91feef517830f" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./tests/Application.FunctionalTests" projectNameWithFlavor="Application.FunctionalTests" name="CleanArchByJasonTaylor.Application.FunctionalTests" id="235a82fffbcf77c68c613b2ebed4d828" language="CSharp">
+		<description></description>
+	</module>
+	<module xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynModule" projectRootPath="./tests/Infrastructure.IntegrationTests" projectNameWithFlavor="Infrastructure.IntegrationTests" name="CleanArchByJasonTaylor.Infrastructure.IntegrationTests" id="0e726aae2ea97a66006b4e974cefee31" language="CSharp">
+		<description></description>
+	</module>
+	<systemExtension xmlns:ns4="http://www.hello2morrow.com/sonargraph/languageprovider/csharp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns4:xsdCSharpRoslynSystemConfiguration" solutionFilePath="./CleanArchByJasonTaylor.sln" language="CSharp"></systemExtension>
+</ns2:softwareSystem>

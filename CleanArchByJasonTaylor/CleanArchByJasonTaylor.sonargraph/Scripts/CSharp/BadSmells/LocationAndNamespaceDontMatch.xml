@@ -1,0 +1,80 @@
+<?xml version="1.0" ?>
+<script version="13.3.1.835">
+	<description>Find classes where the namespace does not match their relative path in the file system.</description>
+	<source><![CDATA[// Script adds issues to classes who are in a namespace that is not consistent with its location in the file system
+ICoreVisitor v = coreAccess.createVisitor()
+
+def expectedNamespaceName = ""
+def count = 0
+
+v.onSourceFile
+{
+    SourceFileAccess sf ->
+    
+    def lastSlashIndex = sf.name.lastIndexOf('/')
+    
+    assert lastSlashIndex > 0
+    
+    // Compute expected namesapce based on relative path of source file
+    expectedNamespaceName = lastSlashIndex > 2 ? sf.name.substring(2, lastSlashIndex).replace('/','.') : ""
+    v.visitChildren(sf)
+}
+
+v.onType
+{
+    TypeAccess type ->
+    
+    def fullName = type.name
+    def doubleColonPos = fullName.indexOf("::")
+    
+    assert doubleColonPos > 0
+    
+    def moduleName = fullName.substring(0, doubleColonPos)
+    def name = fullName.substring(doubleColonPos+2)
+    def lastDotIndex = name.lastIndexOf('.')
+    def nsName = lastDotIndex > 0 ? name.substring(0, lastDotIndex) : ""
+    
+    if (!expectedNamespaceName.equals(nsName))
+    {
+        def longExpectedName = expectedNamespaceName.length() > 0 ? moduleName + "." + expectedNamespaceName : moduleName
+        
+        if (!longExpectedName.equals(nsName))
+        {
+            def msg = "Namespace should be '$expectedNamespaceName' or '$longExpectedName'"
+            
+            if (expectedNamespaceName.length() == 0)
+            {
+                msg = "Type should be in the global namespace or in '$longExpectedName'"
+            }
+            if (nsName.length() == 0)
+            {
+                msg += ", actual namespace is the global namespace."
+            }
+            else
+            {
+                msg += ", actual namespace is '$nsName'."
+            }
+            result.addWarningIssue(type, "Wrong Namespace", msg)
+            count++
+        }
+    }
+}
+
+v.onExternal
+{
+    // skip all external elements
+}
+
+coreAccess.visitParserModel(v)
+
+// Add a system level metric
+def id = coreAccess.getOrCreateMetricId("ClassesInWrongNamespace", "Number of classes in wrong namespace", "Number of classes in namespaces that do nnot mtach their physical location", false, 0, 0)
+
+result.addMetricValue(id, coreAccess, count)
+]]></source>
+	<parameterDefinitions>
+		<parameterDefinition name="timeout" type="Integer" description="When scripts are scheduled for automated execution they time out after the specified number of seconds. The timeout must be greater than '0'." defaultValue="10" candidates=""></parameterDefinition>
+		<parameterDefinition name="output" type="String" description="When a path is specified the output of the script is written into this file. The use of an absolute path (i.e. starting with '/' or 'C:/') is not recommended. It might not be cross-platform compatible." defaultValue="" candidates=""></parameterDefinition>
+	</parameterDefinitions>
+	<languages></languages>
+</script>

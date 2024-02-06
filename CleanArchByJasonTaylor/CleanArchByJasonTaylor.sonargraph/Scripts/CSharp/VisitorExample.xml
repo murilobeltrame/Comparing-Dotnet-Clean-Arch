@@ -1,0 +1,407 @@
+<?xml version="1.0" ?>
+<script version="13.3.1.835">
+	<description>Sample script to illustrate the functionality of the C# visitor.</description>
+	<source><![CDATA[/*Groovy Script to Illustrate the usage of ICSharpVisitor object. The Script visits the different elements of the physical and logical models
+using both inherited methods from ICoreVisitor and methods specific to ICSharpVisitor and creates a Tree illustrating the way that 
+programming elements and logical namespaces have been visited.*/
+
+//Allows the visiting of all elements of the model
+ICSharpVisitor csvisitor = csharpAccess.createVisitor()
+
+//Root nodes for elements that are going to be visited using methods inherited from ICoreVisitor
+NodeAccess inheritedFromCoreVisitorNode = result.addNode("Internal (non-excluded) Elements calculated by methods inherited from CoreVisitor")
+NodeAccess parserElementsNode = result.addNode(inheritedFromCoreVisitorNode, "Parser Elements")
+NodeAccess moduleNamespacesNode = result.addNode(inheritedFromCoreVisitorNode, "Logical Module Namespaces")
+NodeAccess systemNamespacesNode = result.addNode(inheritedFromCoreVisitorNode, "Logical System Namespaces")
+
+//START: Variables to store elements visited by the methods inherited from ICoreVisitor
+def PROGRAMMING_ELEMENTS = 'Programming Elements'
+def TYPES = 'Types'
+def METHODS = 'Methods'
+def ROUTINES = 'Routines'
+def FIELDS = 'Fields'
+def LOGICAL_MODULE_NAMESPACES = 'Logical Module Namespaces'
+def PART = 'Part'
+def NON_PART = 'Non Part'
+
+def calculatedFromCoreVisitor = [:]
+calculatedFromCoreVisitor[PROGRAMMING_ELEMENTS] = new HashSet()
+calculatedFromCoreVisitor[TYPES] = new HashSet()
+calculatedFromCoreVisitor[METHODS] = new HashSet()
+calculatedFromCoreVisitor[ROUTINES] = new HashSet()
+calculatedFromCoreVisitor[FIELDS] = new HashSet()
+
+def logicalModuleNamespaces = [:]
+logicalModuleNamespaces[PART] = new HashSet()
+logicalModuleNamespaces[NON_PART] = new HashSet()
+
+def logicalSystemNamespaces = [:]
+logicalSystemNamespaces[PART] = new HashSet()
+logicalSystemNamespaces[NON_PART] = new HashSet()
+//END: Variables to store elements visited by the methods inherited from ICoreVisitor
+
+//Root nodes for elements  visited with specific methods of ICSharpVisitor
+NodeAccess cSharpVisitorSpecificNode = result.addNode("Internal (non-excluded) Elements calculated by ICSharpVisitor specific methods")
+NodeAccess cSharpParserElementsNode = result.addNode(cSharpVisitorSpecificNode, "Parser Elements")
+
+//START: Variables to store elements visited by specific methods of ICSharpVisitor
+def CSHARP_PROPERTIES = 'C# Properties'
+def CSHARP_EVENTS = 'C# Events'
+def ENUM_CONSTANTS = 'C# Enum Constants'
+def ENUMS = 'C# Enums'
+def CSHARP_CLASSES = 'C# Classes'
+def CSHARP_STRUCTS = 'C# Structs'
+def CSHARP_INTERFACES= 'C# Interfaces'
+def CSHARP_DELEGATES = 'C# Delegates'
+
+def calculatedFromCSharpVisitor = [:]
+calculatedFromCSharpVisitor[CSHARP_PROPERTIES] = new HashSet()
+calculatedFromCSharpVisitor[CSHARP_EVENTS] = new HashSet()
+calculatedFromCSharpVisitor[ENUM_CONSTANTS] = new HashSet()
+calculatedFromCSharpVisitor[ENUMS] = new HashSet()
+calculatedFromCSharpVisitor[CSHARP_CLASSES] = new HashSet()
+calculatedFromCSharpVisitor[CSHARP_STRUCTS] = new HashSet()
+calculatedFromCSharpVisitor[CSHARP_INTERFACES] = new HashSet()
+calculatedFromCSharpVisitor[CSHARP_DELEGATES] = new HashSet()
+//END: Variables to store elements visited by specific methods of ICSharpVisitor
+
+
+//***************************************Inherited From ICoreVisitor***********************************************
+
+//Module visiting
+csvisitor.onModule {
+    CSharpModuleAccess cSharpModuleAccess ->
+    if (!cSharpModuleAccess.isExternal() && !cSharpModuleAccess.isExcluded())
+	{
+		//We visit modules' children
+ 	    csvisitor.visitChildren(cSharpModuleAccess)
+	}
+}
+
+//RootDirectoryPath visiting
+csvisitor.onRootDirectory {
+    DirectoryAccess rootDirectoryAccess ->
+    //We do nothing here, this just illustrates how to visit RootDirectoryPaths. 
+	//Since RootDirectoryPath extends from DirectoryPath , they are already being visited inside
+	//the onDirectory block and thus their chlidren are being visited.
+}
+
+//Directory visiting
+csvisitor.onDirectory {
+    DirectoryAccess directoryAccess ->
+    if (!directoryAccess.isExternal() && !directoryAccess.isExcluded())
+	{
+		//We visit Directories' children
+		csvisitor.visitChildren(directoryAccess)
+	}
+}
+
+//SourceFile visiting (including header files)
+csvisitor.onSourceFile {
+    CSharpSourceFileAccess cSharpSourceFileAccess ->
+    if (!cSharpSourceFileAccess.isExternal() && !cSharpSourceFileAccess.isExcluded())
+	{
+		//We visit SourceFiles' children
+		csvisitor.visitChildren(cSharpSourceFileAccess)
+	}
+}
+
+//ProgrammingElement visiting. This visits all elements detected by the parser without specific type distinction
+csvisitor.onProgrammingElement {
+    ProgrammingElementAccess programmingElementAccess ->
+     if (!programmingElementAccess.isExternal() && !programmingElementAccess.isExcluded())
+	{
+		//We store each ProgrammingElement on its collection
+		calculatedFromCoreVisitor[PROGRAMMING_ELEMENTS].add(programmingElementAccess)
+		
+		//We visit each ProgrammingElement's child. This visit call will be enough for visiting all 
+		//elements that extend from ProgrammingElement thus we don't need to call visitChildren
+		//on every specific type.
+		csvisitor.visitChildren(programmingElementAccess)
+	}
+}
+
+//Type visiting. We visit Classes, Delegates, Enums, Interfaces and Structs without distinction
+csvisitor.onType {
+    CSharpTypeAccess cSharpTypeAccess ->
+    if (!cSharpTypeAccess.isExternal() && !cSharpTypeAccess.isExcluded())
+	{
+		//We store each type on its collection
+		calculatedFromCoreVisitor[TYPES].add(cSharpTypeAccess)
+		
+		//We don't need to call visitChildren here since a Type is a ProgrammingElement
+		//and inside the onProgrammingElement block we already call visitChildren
+	}
+}
+
+//Method visitng. 
+csvisitor.onMethod {
+    CSharpMethodAccess cSharpMethodAccess ->
+    if (!cSharpMethodAccess.isExternal() && !cSharpMethodAccess.isExcluded() && cSharpMethodAccess.isDefinedInEnclosingElement())
+	{
+		//We store each method on its collection
+		calculatedFromCoreVisitor[METHODS].add(cSharpMethodAccess)
+		
+		//We don't need to call visitChildren here since a Method is a ProgrammingElement
+		//and inside the onProgrammingElement block we already call visitChildren
+	}
+}
+
+//Routine visiting. This visits functions only
+csvisitor.onRoutine {
+    RoutineAccess routineAccess ->
+    if (!routineAccess.isExternal() && !routineAccess.isExcluded())
+	{
+		//We store each routine on its collection
+		calculatedFromCoreVisitor[ROUTINES].add(routineAccess)
+		
+		//We don't need to call visitChildren here since a Routine is a ProgrammingElement
+		//and inside the onProgrammingElement block we already call visitChildren
+	}
+}
+
+//Field visiting.
+csvisitor.onField {
+    CSharpFieldAccess cSharpFieldAccess ->
+    if (!cSharpFieldAccess.isExternal() && !cSharpFieldAccess.isExcluded() && cSharpFieldAccess.isDefinedInEnclosingElement())
+	{
+		//We store each field on its collection
+		calculatedFromCoreVisitor[FIELDS].add(cSharpFieldAccess)
+		
+		//We don't need to call visitChildren here since a Field is a ProgrammingElement
+		//and inside the onProgrammingElement block we already call visitChildren
+	}
+}
+
+//Logical Module visiting
+csvisitor.onLogicalModule {
+    CSharpLogicalModuleAccess cSharpLogicalModuleAccess ->
+    if (!cSharpLogicalModuleAccess.isExternal() && !cSharpLogicalModuleAccess.isExcluded())
+	{
+		//We visit each logical module's child
+		csvisitor.visitChildren(cSharpLogicalModuleAccess)
+	}
+}
+
+//Logical Module Namespace visiting
+csvisitor.onLogicalModuleNamespace {
+    CSharpLogicalNamespaceAccess cSharpLogicalNamespaceAccess ->
+    if (!cSharpLogicalNamespaceAccess.isExternal() && !cSharpLogicalNamespaceAccess.isExcluded())
+	{
+		//Part Modules: Only contain other modules as children
+		//Non-Part Modules: Contain at least one Logical Programming Element as child
+		//We store separately part and non-part logical module namespaces 
+		if (cSharpLogicalNamespaceAccess.isPart()) 
+		{
+			logicalModuleNamespaces[PART].add(cSharpLogicalNamespaceAccess)
+		}
+		 else 
+		{
+			logicalModuleNamespaces[NON_PART].add(cSharpLogicalNamespaceAccess)
+		}
+		
+		//We visit each logical module namespace's child
+		csvisitor.visitChildren(cSharpLogicalNamespaceAccess)
+	}
+}
+
+//Logical Module visiting
+csvisitor.onLogicalSystem {
+    LogicalSystemAccess logicalSystemAccess ->
+    if (!logicalSystemAccess.isExternal() && !logicalSystemAccess.isExcluded())
+	{
+		//We visit each logical module's child
+		csvisitor.visitChildren(logicalSystemAccess)
+	}
+}
+
+//Logical System Namespace visiting
+csvisitor.onLogicalSystemNamespace {
+    CSharpLogicalNamespaceAccess cSharpLogicalNamespaceAccess ->
+    if (!cSharpLogicalNamespaceAccess.isExternal() && !cSharpLogicalNamespaceAccess.isExcluded())
+	{
+		//Part Modules: Only contain other modules as children
+		//Non-Part Modules: Contain at least one Logical Programming Element as child
+		//We store separately part and non-part logical system namespaces 
+		if (cSharpLogicalNamespaceAccess.isPart()) 
+		{
+			logicalSystemNamespaces[PART].add(cSharpLogicalNamespaceAccess)
+		}
+		 else 
+		{
+			logicalSystemNamespaces[NON_PART].add(cSharpLogicalNamespaceAccess)
+		}
+		
+		//We visit each logical system namespace's child
+		csvisitor.visitChildren(cSharpLogicalNamespaceAccess)
+	}
+}
+
+
+
+//***************************************ICSharpVisitor Specific***********************************************
+
+//C# Property visiting
+csvisitor.onCSharpProperty {
+    CSharpPropertyAccess cSharpPropertyAccess ->
+	
+	//We store each property on its collection
+	calculatedFromCSharpVisitor[CSHARP_PROPERTIES].add(cSharpPropertyAccess)
+		
+	//We don't need to call visitChildren here since a C# Property is a ProgrammingElement
+	//and inside the onProgrammingElement block we already call visitChildren
+}
+
+//C# Event visiting
+csvisitor.onCSharpEvent {
+    CSharpEventAccess cSharpEventAccess ->
+	
+	//We store each event on its collection
+	calculatedFromCSharpVisitor[CSHARP_EVENTS].add(cSharpEventAccess)
+	
+	//We don't need to call visitChildren here since a C# Event is a ProgrammingElement
+	//and inside the onProgrammingElement block we already call visitChildren
+}
+
+//C# Enum Constant visiting
+csvisitor.onCSharpEnumConstant {
+    CSharpEnumConstantAccess cSharpEnumConstantAccess ->
+     if (!cSharpEnumConstantAccess.isExternal() && !cSharpEnumConstantAccess.isExcluded())
+	{
+		//We store each enum constant on its collection
+		calculatedFromCSharpVisitor[ENUM_CONSTANTS].add(cSharpEnumConstantAccess)
+		
+		//We don't need to call visitChildren here since an EnumConstant is a ProgrammingElement
+		//and inside the onProgrammingElement block we already call visitChildren
+	}
+}
+
+//C# Enum visiting
+csvisitor.onCSharpEnum {
+    CSharpEnumAccess cSharpEnumAccess ->
+    if (!cSharpEnumAccess.isExternal() && !cSharpEnumAccess.isExcluded())
+	{
+		//We store each enum on its collection
+		calculatedFromCSharpVisitor[ENUMS].add(cSharpEnumAccess)
+		
+		//We don't need to call visitChildren here since an Enum is a ProgrammingElement
+		//and inside the onProgrammingElement block we already call visitChildren
+	}
+}
+
+//C# Class visiting
+csvisitor.onCSharpClass {
+    CSharpClassAccess cSharpClassAccess ->
+    if (!cSharpClassAccess.isExternal() && !cSharpClassAccess.isExcluded())
+	{
+		//We store each class on its collection
+		calculatedFromCSharpVisitor[CSHARP_CLASSES].add(cSharpClassAccess)
+		
+		//We don't need to call visitChildren here since a CSharpClass is a ProgrammingElement
+		//and inside the onProgrammingElement block we already call visitChildren
+	}
+}
+
+//C# Struct visiting
+csvisitor.onCSharpStruct {
+    CSharpStructAccess cSharpStructAccess ->
+     if (!cSharpStructAccess.isExternal() && !cSharpStructAccess.isExcluded())
+	{
+		//We store each struct on its collection
+		calculatedFromCSharpVisitor[CSHARP_STRUCTS].add(cSharpStructAccess)
+		
+		//We don't need to call visitChildren here since a Struct is a ProgrammingElement
+		//and inside the onProgrammingElement block we already call visitChildren
+	}
+}
+
+//C# Interface visiting
+csvisitor.onCSharpInterface {
+    CSharpInterfaceAccess cSharpInterfaceAccess ->
+	
+	//We store each struct on its collection
+	calculatedFromCSharpVisitor[CSHARP_INTERFACES].add(cSharpInterfaceAccess)
+    
+	//We don't need to call visitChildren here since a CSharpInterface is a ProgrammingElement
+	//and inside the onProgrammingElement block we already call visitChildren
+}
+
+//C# Delegate visiting
+csvisitor.onCSharpDelegate {
+    CSharpDelegateAccess cSharpDelegateAccess ->
+    
+	//We store each struct on its collection
+	calculatedFromCSharpVisitor[CSHARP_DELEGATES].add(cSharpDelegateAccess)
+	
+	//We don't need to call visitChildren here since a CSharpDelegate is a ProgrammingElement
+	//and inside the onProgrammingElement block we already call visitChildren
+}
+
+//Traverse the model
+csharpAccess.visitModel(csvisitor)
+
+
+//*****Tree Result creation
+
+//Looping over the map for programming elements calculated with the methods inherited from ICoreVisitor
+calculatedFromCoreVisitor.each {
+	key, value ->
+	
+	//We create one node for each key of the map and we set the parserElementsNode as parent
+	NodeAccess node = result.addNode(parserElementsNode, "${key}")
+	value.each {
+		access ->
+		
+		//We create one node for each Element Access under the prevously created node
+		result.addNode(node, access)
+	}
+}
+
+//Looping over the map for programming elements calculated with the ICSharpVisitor specific methods
+calculatedFromCSharpVisitor.each{
+	key, value ->
+	
+	//We create one node for each key of the map and we set the cSharpParserElementsNode as parent
+	NodeAccess node = result.addNode(cSharpParserElementsNode, "${key}")
+	value.each {
+		access ->
+		
+		//We create one node for each Element Access under the prevously created node
+		result.addNode(node, access)
+	}
+}
+
+//Looping over the map for logical module namespaces calculated with the methods inherited from ICoreVisitor
+logicalModuleNamespaces.each{
+	key, value ->
+	
+	//We create one node for each key of the map and we set the moduleNamespacesNode as parent
+	NodeAccess node = result.addNode(moduleNamespacesNode, "Logical ${key} Namespaces")
+	value.each {
+		access ->
+		
+		//We create one node for each Element Access under the prevously created node
+		result.addNode(node, access)
+	}
+}
+
+//Looping over the map for logical system namespaces calculated with the methods inherited from ICoreVisitor
+logicalSystemNamespaces.each{
+	key, value ->
+	//We create one node for each key of the map and we set the systemNamespacesNode as parent
+	NodeAccess node = result.addNode(systemNamespacesNode, "Logical ${key} Namespaces")
+	value.each {
+		access ->
+		
+		//We create one node for each Element Access under the prevously created node
+		result.addNode(node, access)
+	}
+}]]></source>
+	<parameterDefinitions>
+		<parameterDefinition name="timeout" type="Integer" description="When scripts are scheduled for automated execution they time out after the specified number of seconds. The timeout must be greater than '0'." defaultValue="10" candidates=""></parameterDefinition>
+		<parameterDefinition name="output" type="String" description="When a path is specified the output of the script is written into this file. The use of an absolute path (i.e. starting with '/' or 'C:/') is not recommended. It might not be cross-platform compatible." defaultValue="" candidates=""></parameterDefinition>
+	</parameterDefinitions>
+	<languages>
+		<language>CSharp</language>
+	</languages>
+</script>
