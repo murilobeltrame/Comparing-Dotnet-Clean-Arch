@@ -6,7 +6,7 @@ services:
       context: src/
       dockerfile: Dockerfile
     ports:
-      - "8088:80"
+      - "8080:8080"
     environment:
       - ASPNETCORE_ConnectionStrings:DbConnection=Server=mssql;Database=Todos;User Id=sa;Password=${MSSQL_PASSWORD};TrustServerCertificate=True;
     depends_on:
@@ -14,10 +14,10 @@ services:
         condition: service_healthy
   migration:
     build:
-      context: tools/
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: tools/Dockerfile
     environment:
-      - ASPNETCORE_ConnectionStrings:DbConnection=Server=mssql;Database=Todos;User Id=sa;Password=${MSSQL_PASSWORD};TrustServerCertificate=True;
+      - DOTNET_ConnectionStrings:DbConnection=Server=mssql;Database=Todos;User Id=sa;Password=${MSSQL_PASSWORD};TrustServerCertificate=True;
     depends_on:
       mssql:
         condition: service_healthy
