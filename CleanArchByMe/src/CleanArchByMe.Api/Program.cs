@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.UseKestrel(options => options.AddServerHeader = false);
 builder.Services.AddDbContextPool<ApplicationContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
-builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblyContaining<ApplicationAssemblyReference>());
+builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblyContaining<IApplication>());
 builder.Services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddControllers();
 builder.Services.AddHealthChecks()
