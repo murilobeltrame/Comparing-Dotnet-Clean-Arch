@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CleanArchByMe.Infrastructure.Tools": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
