@@ -1,17 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using CleanArchByMe.FunctionalTests.Abstractions;
 
 namespace CleanArchByMe.FunctionalTests.Apis;
 
-public class TodosControllerTests(WebApplicationFactory<Program> factory) : IClassFixture<Program>
+public class TodosControllerTests: IClassFixture<ApplicationFactory<Program>>
 {
-    private readonly WebApplicationFactory<Program> _factory = factory;
+    private readonly ApplicationFactory<Program> _factory;
+    private readonly HttpClient _client;
+
+    public TodosControllerTests(ApplicationFactory<Program> factory)
+    {
+        _factory = factory;
+        _client = _factory.CreateClient();
+    }
 
     [Fact]
     public async Task GetShouldReturnOk()
     {
-        var client = _factory.CreateClient();
-
-        var response = await client.GetAsync("/todos");
+        var response = await _client.GetAsync("/todos");
 
         response.EnsureSuccessStatusCode();
     }
