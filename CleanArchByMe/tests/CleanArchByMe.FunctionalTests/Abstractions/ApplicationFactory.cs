@@ -18,16 +18,11 @@ public class ApplicationFactory<T>: WebApplicationFactory<T> where T : class
             services.RemoveAll<DbContextOptions<ApplicationContext>>();
             services.RemoveAll<DbContextOptions<ApplicationMigrationContext>>();
 
-            services.AddDbContext<ApplicationContext>(options => options
-                .UseSqlite("DataSource=:memory:", o => 
-                    o.MigrationsAssembly(typeof(ApplicationMigrationContext).Assembly.GetName().Name))
-                .EnableSensitiveDataLogging());
+            // This should be set for each individual test run
+            string inMemoryCollectionName = Guid.NewGuid().ToString();
 
-            var provider = services.BuildServiceProvider();
-            using var scope = provider.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-            context.Database.Migrate();
+            // Add ApplicationDbContext using an in-memory database for testing.
+            services.AddDbContext<ApplicationContext>(options => options.UseInMemoryDatabase(inMemoryCollectionName));
         });
-        builder.UseEnvironment("Development");
     }
 }
